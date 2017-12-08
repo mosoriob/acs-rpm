@@ -45,19 +45,19 @@ for p in $(ls $BIN_DIRECTORY); do
     tar -zcvf ../packages/$PACKAGE_PATH.tar.gz  -C ../packages/ $PACKAGE_PATH
     rsync -av ../packages/$PACKAGE_PATH.tar.gz acs.maxi@builder.csrg.cl:~/rpmbuild/SOURCES/
 
-    # If there is no bin_folder, it get's deleted from the files macro
+    # If there is no bin_folder, it get's commentend out from every macro
     if [ "$bin_folder" -lt 1 ]; then
-        sed -i '/%{_usr}\/local\/bin\/*/d' $SPEC_PATH
+        sed -i '/%{_usr}\/local\/bin\/*/s/^/#/' $SPEC_PATH
     fi
     # Same for the rest
     if [ "$lib_folder" -lt 1 ]; then
-        sed -i '/%{_usr}\/local\/%{_lib}\/*/d' $SPEC_PATH
+        sed -i '/%{_usr}\/local\/%{_lib}\/*/s/^/#/' $SPEC_PATH
     fi
     if [ "$java_folder" -lt 1 ]; then
-        sed -i '/%{_usr}\/local\/share\/java\/*/d' $SPEC_PATH
+        sed -i '/%{_usr}\/local\/share\/java\/*/s/^/#/' $SPEC_PATH
     fi
     if [ "$py_folder" -lt 1 ]; then
-        sed -i '/%{_usr}\/local\/lib\/python\/site-packages\/*/d' $SPEC_PATH
+        sed -i '/%{_usr}\/local\/lib\/python\/site-packages\/*/s/^/#/' $SPEC_PATH
     fi
 
     rsync -av $SPEC_PATH acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
