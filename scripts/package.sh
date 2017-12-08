@@ -38,7 +38,7 @@ for p in $(ls $BIN_DIRECTORY); do
     fi
 
     if [ "$(ls -A $PYTHON_DIRECTORY/$p/)" ]; then
-        cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/
+        cp -r $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/
         py_folder=1
     fi
 
