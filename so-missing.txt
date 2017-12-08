@@ -1,0 +1,11 @@
+libACS_BD_Errors.so
+libACS_BD_ErrorsStubs.so
+libACSBulkDataError.so
+libACSBulkDataErrorStubs.so
+libACSBulkDataStatus.so
+libACSBulkDataStatusStubs.so
+libbulkDataDistributerStubs.so
+libbulkDataReceiverStubs.so
+libbulkDataSenderStubs.so
+libbulkDataStubs.so
+libNotifyServiceStatisticsComponentStubs.so
