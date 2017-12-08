@@ -1,4 +1,4 @@
-Name:       acs
+Name:       ACS-acsstartup
 Version:    2017.06
 Release:    1%{?dist}
 Summary:    ACS Start scripts
@@ -15,7 +15,7 @@ ACS Start Scripts in Python, C++ and Bash
 %setup -q
 
 %build
-
+ls -lR
 
 %install
 mkdir -p %{buildroot}%{_usr}/local/lib/python/site-packages/
@@ -28,7 +28,7 @@ mv bin/* %{buildroot}%{_usr}/local/bin/
 #move libs
 mv lib/* %{buildroot}%{_usr}/local/%{_lib}/
 #move python
-mv site-packages/* %{buildroot}%{_usr}/lib/python/site-packages/
+mv site-packages/* %{buildroot}%{_usr}/local/lib/python/site-packages/
 #move java
 mv java/* %{buildroot}%{_usr}/local/share/java
 
@@ -37,9 +37,9 @@ mv java/* %{buildroot}%{_usr}/local/share/java
 %{_usr}/local/bin/*
 #move libs
 %{_usr}/local/%{_lib}/*
-#move python
-%{_usr}/local/share/java/*
 #move java
+%{_usr}/local/share/java/*
+#move python
 %{_usr}/local/lib/python/site-packages/*
 
 %changelog
