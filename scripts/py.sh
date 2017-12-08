@@ -6,8 +6,17 @@ collect_python(){
         #find the file
         lnew=${l##*/}
         py=$(find $LIB_PATH -type f -name $lnew)
+
+
+
         if [[ "$py" != '' ]] ; then
-            cp $py $OUTPUT_PYTHON_DIRECTORY/$p
+            if [ "$(echo $py | wc -w )" != 1 ]; then
+                py=$(find $LIB_PATH -type f -path \*$l)
+                cp $py $OUTPUT_PYTHON_DIRECTORY/$p
+            else
+                cp $py $OUTPUT_PYTHON_DIRECTORY/$p
+            fi
+
         fi
     done
 }

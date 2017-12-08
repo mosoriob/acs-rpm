@@ -1,5 +1,6 @@
-Name:       acs
+Name:       ACS-acsstartup
 Version:    2017.08
+
 Release:    1%{?dist}
 Summary:    ACS Start scripts
 License:    LGPL
@@ -14,7 +15,6 @@ ACS Start Scripts in Python, C++ and Bash
 %setup -q
 
 #%build
-
 
 %install
 cp -r %{_builddir}/%{name}-%{version}/* %{buildroot}/

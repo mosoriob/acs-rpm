@@ -1,4 +1,4 @@
-Name:       acs
+Name:       xmlpybind
 Version:    2017.06
 Release:    2%{?dist}
 Summary:    ACS Start scripts
@@ -15,7 +15,7 @@ ACS Start Scripts in Python, C++ and Bash
 %setup -q
 
 %build
-
+ls -lR
 
 %install
 mkdir -p %{buildroot}%{_usr}/local/lib/python/site-packages/

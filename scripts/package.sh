@@ -25,19 +25,19 @@ for p in $(ls $BIN_DIRECTORY); do
     fi
 
     if [ "$(ls -A $LIB_DIRECTORY/$p/)" ]; then
-        cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+        cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/lib/
     else
         sed -i '/#move libs/{ N; d; }' $SPEC_PATH
 
     fi
     if [ "$(ls -A $JAR_DIRECTORY/$p/)" ]; then
-        cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+        cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/java/
     else
         sed -i '/#move java/{ N; d; }' $SPEC_PATH
     fi
 
     if [ "$(ls -A $PYTHON_DIRECTORY/$p/)" ]; then
-        cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+        cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/
     else
         sed -i '/#move python/{ N; d; }' $SPEC_PATH
     fi
