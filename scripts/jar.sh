@@ -1,15 +1,4 @@
-set -e 
-
-DATA_PATH=/jenkins_data/merges/alma/ACS-2017OCT/ACSSW
-PACKAGES=$(ls $DATA_PATH/Sources)
-JAR_PATH=$DATA_PATH/lib/
-SOURCE_PATH=$DATA_PATH/Sources
-
-OUTPUT_JAR_DIRECTORY=../files/jars
-
-
-rm -rf $OUTPUT_LIB_DIRECTORY
-for p in $PACKAGES; do
+collect_jar(){
     mkdir -p $OUTPUT_JAR_DIRECTORY/$p
     NORM=$(find $SOURCE_PATH/$p -name NORM-BUILD-OUTPUT)
     JARPACKAGE=$(grep -r -e  "Creating jarfile" -e  "Updating jarfile" $NORM | cut -d ' ' -f 4)
@@ -20,9 +9,4 @@ for p in $PACKAGES; do
             cp $jar $OUTPUT_JAR_DIRECTORY/$p/
         fi
     done
-done
-
-
-#find /jenkins_data/centos7/alma/ACS-OCT2016/ACSSW/lib -maxdepth 1  -name *.jar | wc -l  
-#find  jars -name *.jar | wc -l  
-
+}
