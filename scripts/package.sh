@@ -53,13 +53,13 @@ for p in $(ls $BIN_DIRECTORY); do
     if [ "$lib_folder" -lt 1 ]; then
         sed -i '/%{_usr}\/local\/%{_lib}\/*/s/^/#/' $SPEC_PATH
     fi
-    if [ "$java_folder" -lt 1 ]; then
+    if [ "$jar_folder" -lt 1 ]; then
         sed -i '/%{_usr}\/local\/share\/java\/*/s/^/#/' $SPEC_PATH
     fi
     if [ "$py_folder" -lt 1 ]; then
         sed -i '/%{_usr}\/local\/lib\/python\/site-packages\/*/s/^/#/' $SPEC_PATH
     fi
 
-    rsync -av $SPEC_PATH acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
+    rsync -a $SPEC_PATH acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
 done
 
