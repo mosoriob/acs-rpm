@@ -26,6 +26,6 @@ for p in $(ls $BIN_DIRECTORY); do
     sed -i "s/ACS-acsstartup/$p/g" tmp.spec
 	rsync -av tmp.spec acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
     rm tmp.spec
-    exit
+
 done
 
