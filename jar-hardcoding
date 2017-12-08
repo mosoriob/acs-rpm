@@ -1,0 +1,4 @@
+AcsContainerLogLTS.jar:loggingtsTypes
+AcsNCTraceLogLTS.jar:loggingtsTypes
+antlr.jar:antlr
+typeSafeLogsLTS.jar:contLogTest
