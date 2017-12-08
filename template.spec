@@ -29,11 +29,6 @@ mkdir -p %{buildroot}%{_usr}/local/%{_lib}/
 # Clean
 cd %{buildroot}%{_usr}/local/lib/python/site-packages/
 
-
-
-# Clean symlink in builddir
-unlink %{_builddir}/alma
-
 %files
 
 
