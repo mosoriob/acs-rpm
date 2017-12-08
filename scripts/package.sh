@@ -1,6 +1,6 @@
 set -e
 
-VERSION=2017.06
+VERSION=2017.08
 BIN_DIRECTORY=../files/bins
 LIB_DIRECTORY=../files/libs
 PYTHON_DIRECTORY=../files/python
@@ -20,26 +20,18 @@ for p in $(ls $BIN_DIRECTORY); do
 
     if [ "$(ls -A $BIN_DIRECTORY/$p/)" ]; then
         cp $BIN_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
-    else
-        sed -i '/#move bins/{ N; d; }' $SPEC_PATH
     fi
 
     if [ "$(ls -A $LIB_DIRECTORY/$p/)" ]; then
         cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/lib/
-    else
-        sed -i '/#move libs/{ N; d; }' $SPEC_PATH
-
     fi
+    
     if [ "$(ls -A $JAR_DIRECTORY/$p/)" ]; then
         cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/java/
-    else
-        sed -i '/#move java/{ N; d; }' $SPEC_PATH
     fi
 
     if [ "$(ls -A $PYTHON_DIRECTORY/$p/)" ]; then
         cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/
-    else
-        sed -i '/#move python/{ N; d; }' $SPEC_PATH
     fi
 
     tar -zcvf ../packages/$PACKAGE_PATH.tar.gz  -C ../packages/ $PACKAGE_PATH
