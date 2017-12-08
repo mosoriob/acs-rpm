@@ -4,7 +4,9 @@ collect_jar(){
     JARPACKAGE1=$(grep -r -ie "Making jarfile" -ie  "Creating jarfile" -ie  "Updating jarfile" $NORM | cut -d ' ' -f 4)
     JARPACKAGE2=$(grep -ri  "../lib/.*.jar$" $NORM  | grep -v '=' | cut -d ':' -f 2 | sed  's/\t//')
     JARPACKAGE3=$(grep -ri  ".*installing .* java" $NORM  | cut -d ':' -f 2  | grep "="  | cut -d ' ' -f  5 | sed 's/)//' | sed 's/(//')
-    JARPACKAGE=$(echo $JARPACKAGE1 $JARPACKAGE2 $JARPACKAGE3)
+    JARPACKAGE4=$(grep -r -ie "building jar" $NORM | cut -d ':' -f 3 | sed 's/ //')
+
+    JARPACKAGE=$(echo $JARPACKAGE1 $JARPACKAGE2 $JARPACKAGE3 $JARPACKAGE4)
 
     for j in $JARPACKAGE; do
         j=${j##*/}
