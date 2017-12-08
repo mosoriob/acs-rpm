@@ -18,7 +18,7 @@ for p in $PACKAGES; do
         #find the file
         lib=$(find $LIB_PATH -type f -name $l)
         if [[ "$lib" != '' ]] ; then
-            cp $lib OUTPUT_JAR_DIRECTORY/$p/
+            cp $lib $OUTPUT_JAR_DIRECTORY/$p/
         fi
     done
 done
