@@ -9,23 +9,44 @@ JAR_DIRECTORY=../files/jars
 
 for p in $(ls $BIN_DIRECTORY); do
     PACKAGE_PATH="$p-$VERSION"
-	mkdir -p ../packages/$PACKAGE_PATH/{bin,lib,java,site-packages}
+    SPEC_PATH="../SPECS/acs-cb-$p.spec"
 
-	#move bins
-    find $BIN_DIRECTORY/$p/ -type f -exec cp $BIN_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/ {} \;
-    find $LIB_DIRECTORY/$p/ -type f -exec cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/lib/ {} \;
-    find $JAR_DIRECTORY/$p/ -type f -exec cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/java/ {} \;
-    find $PYTHON_DIRECTORY/$p/ -type f -exec cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/ \;
+    mkdir -p ../packages/$PACKAGE_PATH/{bin,lib,java,site-packages}
+    cp ../template.spec $SPEC_PATH
+    sed -i "s/ACS-acsstartup/$p/g" $SPEC_PATH
+
+    rpmdev-bumpspec --comment="Automatic Packaging" \
+        --userstring="Maximiliano Osorio-Bañados+mosorio@inf.utfsm.cl" $SPEC_PATH
+
+    if [ "$(ls -A $BIN_DIRECTORY/$p/)" ]; then
+        cp $BIN_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+    else
+        sed -i '/#move bins/{ N; d; }' $SPEC_PATH
+    fi
+
+    if [ "$(ls -A $LIB_DIRECTORY/$p/)" ]; then
+        cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+    else
+        sed -i '/#move libs/{ N; d; }' $SPEC_PATH
+
+    fi
+    if [ "$(ls -A $JAR_DIRECTORY/$p/)" ]; then
+        cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+    else
+        sed -i '/#move java/{ N; d; }' $SPEC_PATH
+    fi
+
+    if [ "$(ls -A $PYTHON_DIRECTORY/$p/)" ]; then
+        cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+    else
+        sed -i '/#move python/{ N; d; }' $SPEC_PATH
+    fi
+
+    tar -zcvf ../packages/$PACKAGE_PATH.tar.gz  -C ../packages/ $PACKAGE_PATH
+    rsync -av ../packages/$PACKAGE_PATH.tar.gz acs.maxi@builder.csrg.cl:~/rpmbuild/SOURCES/
 
 
-    tar -zcvf  packages/$PACKAGE_PATH.tar.gz  -C packages/ $PACKAGE_PATH
-	rsync -av packages/$PACKAGE_PATH.tar.gz acs.maxi@builder.csrg.cl:~/rpmbuild/SOURCES/
-
-
-    cp ../template.spec tmp.spec
-    sed -i "s/ACS-acsstartup/$p/g" tmp.spec
-	rsync -av tmp.spec acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
-    rm tmp.spec
+    rsync -av $SPEC_PATH acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
 
 done
 

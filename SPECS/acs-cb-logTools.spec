@@ -1,6 +1,6 @@
 Name:       acs
 Version:    2017.06
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    ACS Start scripts
 License:    LGPL
 URL:        http://csrg-utfsm.github.io
@@ -25,21 +25,12 @@ mkdir -p %{buildroot}%{_usr}/local/bin/
 
 #move bins
 mv bin/* %{buildroot}%{_usr}/local/bin/
-#move libs
-mv lib/* %{buildroot}%{_usr}/local/%{_lib}/
-#move python
-mv site-packages/* %{buildroot}%{_usr}/lib/python/site-packages/
-#move java
-mv java/* %{buildroot}%{_usr}/local/share/java
 
 %files
 #move bins
 %{_usr}/local/bin/*
-#move libs
-%{_usr}/local/%{_lib}/*
-#move python
-%{_usr}/local/share/java/*
-#move java
-%{_usr}/local/lib/python/site-packages/*
 
 %changelog
+* Fri Dec 08 2017 Maximiliano Osorio-Bañados+mosorio@inf.utfsm.cl - 2017.06-2
+- Automatic Packaging
+
