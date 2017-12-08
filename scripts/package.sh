@@ -6,6 +6,10 @@ LIB_DIRECTORY=../files/libs
 PYTHON_DIRECTORY=../files/python
 JAR_DIRECTORY=../files/jars
 
+bin_folder=0
+jar_folder=0
+lib_folder=0
+py_folder=0
 
 for p in $(ls $BIN_DIRECTORY); do
     PACKAGE_PATH="$p-$VERSION"
@@ -20,25 +24,42 @@ for p in $(ls $BIN_DIRECTORY); do
 
     if [ "$(ls -A $BIN_DIRECTORY/$p/)" ]; then
         cp $BIN_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/bin/
+        bin_folder=1
     fi
 
     if [ "$(ls -A $LIB_DIRECTORY/$p/)" ]; then
         cp $LIB_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/lib/
+        lib_folder=1
     fi
     
     if [ "$(ls -A $JAR_DIRECTORY/$p/)" ]; then
         cp $JAR_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/java/
+        jar_folder=1
     fi
 
     if [ "$(ls -A $PYTHON_DIRECTORY/$p/)" ]; then
         cp $PYTHON_DIRECTORY/$p/* ../packages/$PACKAGE_PATH/site-packages/
+        py_folder=1
     fi
 
     tar -zcvf ../packages/$PACKAGE_PATH.tar.gz  -C ../packages/ $PACKAGE_PATH
     rsync -av ../packages/$PACKAGE_PATH.tar.gz acs.maxi@builder.csrg.cl:~/rpmbuild/SOURCES/
 
+    # If there is no bin_folder, it get's deleted from the files macro
+    if [ "$bin_folder" -lt 1 ]; then
+        sed -i '/%{_usr}\/local\/bin\/*/d' $SPEC_PATH
+    fi
+    # Same for the rest
+    if [ "$lib_folder" -lt 1 ]; then
+        sed -i '/%{_usr}\/local\/%{_lib}\/*/d' $SPEC_PATH
+    fi
+    if [ "$java_folder" -lt 1 ]; then
+        sed -i '/%{_usr}\/local\/share\/java\/*/d' $SPEC_PATH
+    fi
+    if [ "$py_folder" -lt 1 ]; then
+        sed -i '/%{_usr}\/local\/lib\/python\/site-packages\/*/d' $SPEC_PATH
+    fi
 
     rsync -av $SPEC_PATH acs.maxi@builder.csrg.cl:~/rpmbuild/SPECS/acs-cb-$p.spec
-
 done
 
