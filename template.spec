@@ -1,23 +1,32 @@
 Name:       ACS-acsstartup
 Version:    2017.08
-
 Release:    1%{?dist}
-Summary:    ACS Start scripts
+Summary:    ACS CommonSoftware Module
 License:    LGPL
 URL:        http://csrg-utfsm.github.io
 Source0:    %{name}-%{version}.tar.gz
 Requires:   ACS-Tools-Kit-Benchmark <= %{version}
 
 %description
-ACS Start Scripts in Python, C++ and Bash
+ %{name} CommonSoftware Module light RPM
 
 %prep
 %setup -q
 
-#%build
+%build
+ls -lR
 
 %install
-cp -r %{_builddir}/%{name}-%{version}/* %{buildroot}/
+mkdir -p %{buildroot}%{_usr}/local/lib/python/site-packages/
+mkdir -p %{buildroot}%{_usr}/local/share/java/
+mkdir -p %{buildroot}%{_usr}/local/%{_lib}/
+mkdir -p %{buildroot}%{_usr}/local/bin/
+
+# Copying files from buildir to buildroot
+cp %{_builddir}/%{name}-%{version}/bin/* %{buildroot}%{_usr}/local/bin/
+cp %{_builddir}/%{name}-%{version}/lib/* %{buildroot}%{_usr}/local/%{_lib}/
+cp %{_builddir}/%{name}-%{version}/site-packages/* %{buildroot}%{_usr}/local/lib/python/site-packages/
+cp %{_builddir}/%{name}-%{version}/java/* %{buildroot}%{_usr}/local/share/java/
 
 %files
 %{_usr}/local/bin/*
