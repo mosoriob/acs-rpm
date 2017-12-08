@@ -1,12 +1,11 @@
 Name:       acs
-Version:    2017.06
+Version:    2017.08
 Release:    1%{?dist}
 Summary:    ACS Start scripts
 License:    LGPL
 URL:        http://csrg-utfsm.github.io
 Source0:    %{name}-%{version}.tar.gz
-#BuildRequires:  ACS-Tools-Kit-Benchmark-devel >= %{version} ACS-acsidlcommon >= %{version}
-#Requires:   ACS-Tools-Kit-Benchmark >= %{version}
+Requires:   ACS-Tools-Kit-Benchmark <= %{version}
 
 %description
 ACS Start Scripts in Python, C++ and Bash
@@ -14,32 +13,16 @@ ACS Start Scripts in Python, C++ and Bash
 %prep
 %setup -q
 
-%build
+#%build
 
 
 %install
-mkdir -p %{buildroot}%{_usr}/local/lib/python/site-packages/
-mkdir -p %{buildroot}%{_usr}/local/share/java/
-mkdir -p %{buildroot}%{_usr}/local/%{_lib}/
-mkdir -p %{buildroot}%{_usr}/local/bin/
-
-#move bins
-mv bin/* %{buildroot}%{_usr}/local/bin/
-#move libs
-mv lib/* %{buildroot}%{_usr}/local/%{_lib}/
-#move python
-mv site-packages/* %{buildroot}%{_usr}/lib/python/site-packages/
-#move java
-mv java/* %{buildroot}%{_usr}/local/share/java
+cp -r %{_builddir}/%{name}-%{version}/* %{buildroot}/
 
 %files
-#move bins
 %{_usr}/local/bin/*
-#move libs
 %{_usr}/local/%{_lib}/*
-#move python
 %{_usr}/local/share/java/*
-#move java
 %{_usr}/local/lib/python/site-packages/*
 
 %changelog
