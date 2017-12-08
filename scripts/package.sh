@@ -6,12 +6,12 @@ LIB_DIRECTORY=../files/libs
 PYTHON_DIRECTORY=../files/python
 JAR_DIRECTORY=../files/jars
 
-bin_folder=0
-jar_folder=0
-lib_folder=0
-py_folder=0
-
 for p in $(ls $BIN_DIRECTORY); do
+    bin_folder=0
+    jar_folder=0
+    lib_folder=0
+    py_folder=0
+
     PACKAGE_PATH="$p-$VERSION"
     SPEC_PATH="../SPECS/acs-cb-$p.spec"
 

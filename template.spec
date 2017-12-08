@@ -25,7 +25,7 @@ mkdir -p %{buildroot}%{_usr}/local/bin/
 # Copying files from buildir to buildroot
 cp %{_builddir}/%{name}-%{version}/bin/* %{buildroot}%{_usr}/local/bin/
 cp %{_builddir}/%{name}-%{version}/lib/* %{buildroot}%{_usr}/local/%{_lib}/
-cp %{_builddir}/%{name}-%{version}/site-packages/* %{buildroot}%{_usr}/local/lib/python/site-packages/
+cp -r %{_builddir}/%{name}-%{version}/site-packages/* %{buildroot}%{_usr}/local/lib/python/site-packages/
 cp %{_builddir}/%{name}-%{version}/java/* %{buildroot}%{_usr}/local/share/java/
 
 %files
