@@ -1,18 +1,25 @@
-DATA=/jenkins_data/merges/alma/ACS-2017OCT/ACSSW/Sources/
-PACKAGES=$(ls /jenkins_data/merges/alma/ACS-2017OCT/ACSSW/Sources/)
+set -e 
 
-rm -rf pys
+DATA_PATH=/jenkins_data/merges/alma/ACS-2017OCT/ACSSW
+PACKAGES=$(ls $DATA_PATH/Sources)
+LIB_PATH=$DATA_PATH/lib/
+SOURCE_PATH=$DATA_PATH/Sources
+
+OUTPUT_PYTHON_DIRECTORY=../files/python
+
+
+rm -rf $OUTPUT_PYTHON_DIRECTORY
 for p in $PACKAGES; do
-        mkdir -p pys/$p
-        NORM=$(find $DATA$p -name NORM-BUILD-OUTPUT)
-	PYTHONPACKAGE=$(grep -r "lib/python/" $NORM | cut -d ' ' -f 5 | sed "s/..\/lib\/python\/site-packages\///g")
-	for l in $PYTHONPACKAGE; do
-		#get only filename
-                lnew=${l##*/}
-		py=$(find /jenkins_data/merges/alma/ACS-2017OCT/ACSSW/lib/ -type f -name $lnew)
-                if [[ "$py" != '' ]] ; then
-                        cp $py pys/$p/
-			echo $py
-                fi
-	done
-done	
+    mkdir -p $OUTPUT_PYTHON_DIRECTORY/$p
+    NORM=$(find $SOURCE_PATH/$p -name NORM-BUILD-OUTPUT)
+    PYTHONPACKAGE=$(grep -r "lib/python/" $NORM | cut -d ' ' -f 5 | sed "s/..\/lib\/python\/site-packages\///g")
+    for l in $PYTHONPACKAGE; do
+        #find the file
+        lnew=${l##*/}
+        py=$(find $LIB_PATH -type f -name $lnew)
+        if [[ "$py" != '' ]] ; then
+            cp $py $OUTPUT_PYTHON_DIRECTORY/$p
+        fi
+    done
+done
+

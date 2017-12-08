@@ -1,3 +1,5 @@
+set -e 
+
 DATA_PATH=/jenkins_data/merges/alma/ACS-2017OCT/ACSSW
 PACKAGES=$(ls $DATA_PATH/Sources)
 BIN_PATH=$DATA_PATH/bin/
