@@ -26,3 +26,5 @@ for p in $PACKAGES; do
     collect_python
 done
 
+
+rm -rf ../files/python/acserridl/ACSErr ../files/python/acserridl/ACSErr__POA/
